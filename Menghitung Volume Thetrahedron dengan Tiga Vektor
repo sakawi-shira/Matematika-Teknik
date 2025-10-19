@@ -1,1 +1,79 @@
+def input_nilai_vektor(variable):  
+    # Mendefinisikan fungsi untuk memasukkan nilai komponen vektor (i, j, k)
+    while True:  
+        # Looping agar pengguna bisa mengulang input sampai benar
+        try:  
+            # Blok try untuk menangani kemungkinan error input non-angka
+            komponen_vektor = input(f"Masukan Nilai i, j, dan k Pada Vektor {variable} (3 Angka Dipisahkan Oleh Spasi) : ").split()  
+            # Meminta input tiga angka, lalu memisahkannya menjadi list dengan split()
 
+            if len(komponen_vektor) != 3:  
+                # Mengecek apakah jumlah komponen tepat tiga
+                print("Nilai Pada Komponen Vektor Harus Berjumlah 3!")  
+                # Menampilkan pesan kesalahan jika jumlah komponen tidak 3
+                continue  
+                # Mengulang input lagi
+
+            vektor = list(map(int, komponen_vektor))  
+            # Mengubah tiap elemen input (string) menjadi integer
+            return vektor  
+            # Mengembalikan hasil list komponen vektor (contoh: [1,2,3])
+
+        except ValueError:  
+            # Menangkap error jika pengguna tidak memasukkan angka
+            print("Masukan Angka!")  
+            # Memberi tahu bahwa input harus berupa angka
+
+print("="*40)  
+# Mencetak garis pemisah sepanjang 40 karakter "="
+
+for variable in ["u", "v", "w"]:  
+    # Melakukan pengulangan untuk tiga vektor: u, v, dan w
+    locals()[variable] = input_nilai_vektor(variable)  
+    # Menyimpan hasil input vektor ke variabel lokal (u, v, w)
+
+print("="*40)  
+# Garis pemisah lagi
+print("Nilai Setiap Komponen Vektor:")  
+# Menampilkan label hasil input
+
+komponen = ["u","v","w"]
+# Membuat list berisi nama-nama vektor
+nilai = [u,v,w]
+# Membuat list berisi nilai dari masing-masing vektor
+
+for i in range(3):
+    # Loop sebanyak 3 kali untuk menampilkan ketiga vektor
+    print(f"{komponen[i]}: i={nilai[i][0]} j={nilai[i][1]} k={nilai[i][2]}")
+    # Tampilkan komponen tiap vektor dalam format rapi (contoh: u: i=1 j=2 k=3)
+
+# rumus : 1/3 (u . (v x w))  
+# Volume tetrahedron dihitung dari hasil dot product u dengan cross product (v x w)
+
+# Cross product antara v dan w
+vxw = [  
+      v[1]*w[2] - w[1]*v[2],  # Komponen i = (v2*w3 - w2*v3)
+      w[0]*v[2] - w[2]*v[0],  # Komponen j = (w1*v3 - w3*v1)
+      w[1]*v[0] - w[0]*v[1]   # Komponen k = (w2*v1 - w1*v2)
+]
+
+# Dot product antara u dan (v x w)
+sum = 0  # Variabel untuk menampung hasil penjumlahan komponen dot product
+
+for i in range(3):  
+    # Loop sebanyak 3 komponen (i, j, k)
+    sum = sum + u[i]*vxw[i]  
+    # Menjumlahkan hasil perkalian komponen yang bersesuaian
+
+sum = abs(sum)  
+# Mengambil nilai mutlak hasil dot product (volume selalu positif)
+
+volume_thetrahedron = 1/3 * sum  
+# Menghitung volume tetrahedron sesuai rumus 1/3 * |u . (v x w)|
+
+print("="*40)  
+# Garis pembatas
+print(f"Volume Thetrahedron : {volume_thetrahedron:.2f}")  
+# Menampilkan hasil volume dengan dua angka di belakang koma
+print("="*40)  
+# Garis penutup
