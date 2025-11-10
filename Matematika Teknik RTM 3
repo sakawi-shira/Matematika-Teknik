@@ -1,0 +1,76 @@
+# Fungsi untuk menerima input nilai berupa angka desimal (float) 
+def input_koefisien(variable):
+    while True:  # Loop supaya program minta ulang kalau input salah
+        try:
+            return float(input(variable))  # Konversi input ke float
+        except ValueError:  # Kalau input bukan angka
+            print("Input harus berupa angka!")  # Pesan kesalahan dan ulangi input
+
+# Fungsi untuk menerima input berupa satu huruf (variabel tak diketahui)
+def input_variable(variable):
+    while True:  # Loop agar input valid
+        var = input(variable).strip()  # Ambil input dan hapus spasi di depan/belakang
+        if var.isalpha() and len(var) == 1:  # Pastikan hanya satu huruf alfabet
+            return var  # Kembalikan huruf jika valid
+        print("Masukkan satu huruf sebagai variabel (contoh: b)")  # Jika salah, beri tahu user
+
+print("="*45)  # Garis pemisah visual agar output lebih rapi
+
+# Input koefisien untuk fungsi pertama (fungsi kuadrat)
+print("Masukkan koefisien untuk fungsi pertama (T1(x) = a*x^2 + b*x + c)")
+a = input_koefisien("Masukkan koefisien a: ")  # Input nilai a
+b = input_koefisien("Masukkan koefisien b: ")  # Input nilai b
+c = input_koefisien("Masukkan koefisien c: ")  # Input nilai c
+
+print("="*45)
+
+# Input variabel tak diketahui di fungsi kedua (misal b)
+temp = input_variable("Pada fungsi kedua, masukkan variabel tak diketahui (misal: b): ")
+
+# Input koefisien untuk fungsi linear kedua
+print(f"Masukkan koefisien untuk fungsi kedua (T2(x) = m*x + {temp})")
+m = input_koefisien("Masukkan koefisien m: ")  # Input nilai m
+
+# Input titik sambung x (nilai tempat dua fungsi harus kontinu)
+x = input_koefisien("Masukkan titik sambung x (koefisien x): ")
+print("="*45)
+
+# Hitung nilai limit kiri (fungsi pertama di titik x)
+limit_kiri = a*(x**2) + b*x + c
+# Hitung nilai variabel tak diketahui agar fungsi kontinu
+hasil_var = limit_kiri - (m*x)
+
+# Definisi fungsi untuk menampilkan seluruh langkah penyelesaian
+def output(a, b, c, m, temp, x, limit_kiri, hasil_var):
+    # Menampilkan fungsi yang diketahui
+    print(f"Diketahui fungsi:")
+    print(f"   T1(x) = {a}x² + {b}x + {c}")
+    print(f"   T2(x) = {m}x + {temp}")
+    print(f"   Titik sambung x = {x}")
+
+    # Menampilkan langkah perhitungan limit kiri
+    print("Hitung limit kiri:")
+    print(f"   lim x→{x}⁻ T1(x) = {a}({x})^2 + {b}({x}) + {c}")
+    print(f"                            = {limit_kiri}")
+
+    # Menampilkan langkah perhitungan limit kanan
+    print("Hitung limit kanan:")
+    print(f"   lim x→{x}⁺ T2(x) = {m}({x}) + {temp}")
+    print(f"                    = {m*x} + {temp}")
+
+    # Menampilkan syarat kontinuitas
+    print("Syarat kontinuitas:")
+    print(f"   {limit_kiri} = {m*x} + {temp}")
+
+    # Menunjukkan proses mencari variabel tak diketahui
+    print("Maka,")
+    print(f"   {temp} = {limit_kiri} - {m*x}")
+    print(f"          = {hasil_var}")
+
+    # Menampilkan kesimpulan akhir
+    print("Kesimpulan:")
+    print(f"   Nilai {temp} agar fungsi kontinu di x = {x} adalah {hasil_var}")
+    print("="*45)
+
+# Panggil fungsi untuk menampilkan semua langkah perhitungan dan hasil akhir
+output(a, b, c, m, temp, x, limit_kiri, hasil_var)
