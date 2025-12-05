@@ -1,0 +1,53 @@
+# Program Menghitung Luas Dasar Wadah Terbuka dari Lembaran Aluminium
+# Rumus yang digunakan: A(x) = (B - 2x)^2
+# B = panjang sisi lembaran aluminium
+# x = ukuran potongan pada setiap sudut (harus berada dalam rentang 0 < x < B/2)
+
+run = True
+cek = True
+
+# Loop pertama untuk memvalidasi input pengguna
+while cek:
+    print("="*40)
+    try:
+        # Input nilai B dan x dari pengguna
+        b = float(input("Masukan nilai B (panjang sisi alumunium) (m) : "))
+        x = float(input("Masukan nilai x (ukuran potong alumunium) (m) : "))
+        print("="*40)
+
+        # Validasi nilai x tidak boleh lebih dari atau sama dengan B/2
+        # dan tidak boleh <= 0 (agar sisa sisi tetap positif)
+        if b / 2 <= x or x <= 0:
+            print("="*40)
+            print("Nilai X tidak masuk akal, tidak ada luas yang tersisa.")
+            
+            # Memberi opsi kepada pengguna untuk keluar dari program
+            opsi = (input("Ketik 1 jika ingin keluar dari program. "))
+            
+            if opsi == "1":
+                run = False
+                cek = False
+        else:
+            # Jika input valid, keluar dari loop validasi
+            cek = False
+    except ValueError:
+        # Jika user memasukan nilai selain angka
+        print("Masukan angka!") 
+
+# Jika run masih True, maka program melanjutkan perhitungan luas
+if run:
+    print("="*40)
+    
+    # Menghitung sisi dasar wadah setelah dipotong
+    temp = b - 2*x
+    
+    # Menghitung luas dasar menggunakan rumus (B - 2x)^2
+    sum = temp**2
+    
+    # Menampilkan proses perhitungan kepada pengguna
+    print("Rumus luas dasar wadah terbuka => A(x) = (B - 2x)²")
+    print(f"Luas Maksimum A(x) = ({b} - 2*{x})²")
+    print(f"Luas Maksimum A(x) = ({temp})²")
+    print(f"Luas Maksimum yang dapat dihasilkan adalah {sum} m²")
+    
+    print("="*40)
