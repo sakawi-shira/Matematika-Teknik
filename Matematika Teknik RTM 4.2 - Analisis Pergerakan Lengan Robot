@@ -1,0 +1,82 @@
+# Fungsi input angka dengan validasi
+def input_angka(pesan, tipe="none"):
+    while True:  # Loop sampai input valid
+        try:
+            nilai = float(input(pesan))  
+            # Membaca input dan mencoba mengubah menjadi float
+
+            # Validasi nilai positif (harus > 0)
+            if tipe == "positif" and nilai <= 0:
+                print("Nilai harus lebih besar dari 0.")
+                continue
+
+            # Validasi nilai non-negatif (harus >= 0)
+            if tipe == "non_negatif" and nilai < 0:
+                print("Nilai tidak boleh negatif.")
+                continue
+
+            return nilai  # Jika lolos validasi, nilai dikembalikan
+
+        except ValueError:
+            print("Masukkan angka yang valid.")  
+            # Jika input bukan angka, ulangi input
+
+
+# ================= INPUT USER =======================
+
+# Jumlah permintaan saat ini (N harus >= 0)
+N = input_angka("Masukkan nilai N (Jumlah permintaan saat ini) : ", 
+                tipe="non_negatif")
+
+# Konstanta a harus > 0
+a = input_angka("Masukan nilai a (Sensitivitas T terhadap jumlah permintaan) : ", 
+                tipe="positif")
+
+# Konstanta b harus >= 0
+b = input_angka("Masukan nilai b (Senstivitas T terhadap ukuran data) : ", 
+                tipe="non_negatif")
+
+k = input_angka("Masukan nilai k (Laju pertumbuhan permintaan) : ")
+
+c = input_angka("Masukan nilai c (Laju pertumbuhan ukuran data) : ")
+
+
+# ================= PROSES PERHITUNGAN =======================
+
+# Jika program masih boleh berjalan
+print("="*40)
+
+# Hitung total perubahan waktu respons server
+sum = 2*a*k*N*N + b*c
+
+# Simpan kedua bagian rumus untuk ditampilkan sebagai proses
+temp_1 = 2 * a * k * N * N     # Bagian dari 2a k N²
+temp_2 = b * c                 # Bagian dari b c
+
+# Tampilkan penjelasan model
+print("Perhitungan dT/dt berdasarkan model:")
+print("T = aN^2 + bS")  # Rumus waktu respons
+print("dT/dt = 2aN(dN/dt) + b(dS/dt)")  # Hasil turunan sesuai chain rule
+
+# Tampilkan perubahan N dan S per detik
+print(f"dN/dt = kN = {k} * {N} = {k*N}")  # Perubahan jumlah permintaan
+print(f"dS/dt = c = {c}")                # Perubahan ukuran data
+print("="*40)
+
+# Tampilkan proses substitusi ke dalam rumus dT/dt
+print("Substitusi:")
+print(f"= 2 * a * k * N^2")
+print(f"= 2 * {a} * {k} * ({N}^2)")  # Menampilkan substitusi angka
+print(f"= {temp_1}")                 # Hasil bagian kiri rumus
+
+# Bagian b*c
+print(f"Sisi kanan:")
+print(f"= {b} * {c}")                # Substitusi konstanta b dan c
+print(f"= {temp_2}")                 # Hasil bagian kanan rumus
+
+print("="*40)
+
+# Tampilkan hasil akhir dT/dt
+print(f"Perubahan waktu respon server (dT/dt) = {temp_1} + {temp_2}")
+print(f"            = {sum} ms/detik")  # Hasil final
+print("="*40)
